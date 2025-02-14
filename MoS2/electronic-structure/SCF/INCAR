@@ -1,0 +1,16 @@
+
+ENMAX = 500  
+PREC = Accurate
+ALGO = Fast
+NELM = 100
+ISMEAR = 0
+SIGMA = 1E-2
+
+geometry
+
+EDIFF  = 1E-7
+
+functional
+IVDW = 12
+
+ISPIN = 2

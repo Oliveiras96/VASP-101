@@ -1,0 +1,778 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Instalacao VASP 6.X.X</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-default_background {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-transparentGray { background-color: undefined; }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="116111ba-1e05-80a9-bd1d-ce3599ed7e62" class="page sans"><header><h1 class="page-title">Instalacao VASP 6.X.X</h1><p class="page-description"></p></header><div class="page-body"><hr id="116111ba-1e05-803e-87d3-ce3bebbc30d3"/><p id="116111ba-1e05-80f1-a699-f81259e6f067" class=""><strong>Links uteis</strong></p><figure id="116111ba-1e05-8007-88b0-e54f46e5dc5d"><a href="https://www.vasp.at/wiki/index.php/Installing_VASP.6.X.X" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Installing VASP.6.X.X - VASP Wiki</div><div class="bookmark-description">Requests for technical support from the VASP team should be posted in the VASP Forum.</div></div><div class="bookmark-href">https://www.vasp.at/wiki/index.php/Installing_VASP.6.X.X</div></div></a></figure><figure id="116111ba-1e05-8084-b1ec-f067a1cad4f2"><a href="https://www.vasp.at/wiki/index.php/Personal_computer_installation" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Personal computer installation - VASP Wiki</div><div class="bookmark-description">Requests for technical support from the VASP team should be posted in the VASP Forum.</div></div><div class="bookmark-href"><img src="https://www.vasp.at/favicon.ico" class="icon bookmark-icon"/>https://www.vasp.at/wiki/index.php/Personal_computer_installation</div></div></a></figure><p id="116111ba-1e05-805a-997e-f9f236afc598" class="">
+</p><p id="116111ba-1e05-805b-8436-e732b4e717c5" class="">
+</p><hr id="116111ba-1e05-8089-b908-c2f01b598537"/><p id="116111ba-1e05-8037-b724-f9459ff0a238" class="">→ Dependencias:</p><ul id="116111ba-1e05-8076-a349-c5e6a73cc803" class="bulleted-list"><li style="list-style-type:disc">Compilador de Fortran:<ul id="116111ba-1e05-80c7-b8e6-e679e62f90f7" class="bulleted-list"><li style="list-style-type:circle">GCC</li></ul><ul id="116111ba-1e05-8085-9c72-c6d7fb29e1d4" class="bulleted-list"><li style="list-style-type:circle">intel oneapi</li></ul><ul id="116111ba-1e05-8040-a53b-ef288e67a086" class="bulleted-list"><li style="list-style-type:circle">NVIDIA HPC-SDK</li></ul><ul id="116111ba-1e05-80ad-a358-f58a7924216a" class="bulleted-list"><li style="list-style-type:circle">AOCC</li></ul></li></ul><ul id="116111ba-1e05-8036-8e3b-c4ba22b33823" class="bulleted-list"><li style="list-style-type:disc">Bibliotecas numericas:<ul id="116111ba-1e05-8001-b1b8-e53bb6821e5f" class="bulleted-list"><li style="list-style-type:circle">intel oneapi mkl</li></ul><ul id="116111ba-1e05-8045-b2e3-fac02c207006" class="bulleted-list"><li style="list-style-type:circle">FFTW + OpenBlas + Scalapack</li></ul><ul id="116111ba-1e05-80e0-bec3-f862a737678d" class="bulleted-list"><li style="list-style-type:circle">AOCL</li></ul></li></ul><ul id="116111ba-1e05-80e3-a2f6-c25241f9331f" class="bulleted-list"><li style="list-style-type:disc">Implementacao de uma Message Passing Interface (MPI):<ul id="116111ba-1e05-808c-838f-e5ef55a462f5" class="bulleted-list"><li style="list-style-type:circle">intel oneapi mpi</li></ul><ul id="116111ba-1e05-804e-a860-d65453a4c771" class="bulleted-list"><li style="list-style-type:circle">OpenMpi</li></ul></li></ul><hr id="116111ba-1e05-8055-b8ab-fa5738cd46c2"/><p id="116111ba-1e05-805d-abc1-e02177c5c227" class=""><strong>Necessario para instalacao no Ubuntu 20.04 (focal) (Graphene)</strong></p><table id="116111ba-1e05-8021-b175-f262da3ded2e" class="simple-table"><tbody><tr id="d913eb46-a5f3-4b2e-84ca-936bffded59e"><td id="MDYa" class="" style="width:93px">Compilador</td><td id="XXQL" class="" style="width:108px">MPI</td><td id="EHSK" class="" style="width:81px">FFT</td><td id="khg&lt;" class="" style="width:113px">BLAS</td><td id="RMrO" class="">ScalaPACK</td><td id="LP;J" class="">HDF5</td></tr><tr id="126455c6-acb6-494a-b91f-bce1d72b77c7"><td id="MDYa" class="" style="width:93px">gcc-9.4.0</td><td id="XXQL" class="" style="width:108px">openmpi-4.0.3</td><td id="EHSK" class="" style="width:81px">fftw-3.3.8</td><td id="khg&lt;" class="" style="width:113px">openblas-0.3.8</td><td id="RMrO" class="">netlib-scalapack-2.1.0</td><td id="LP;J" class="">hdf5-1.10.4</td></tr><tr id="21ab40b1-15d7-46ad-9674-76e6e99b17bc"><td id="MDYa" class="" style="width:93px">✅</td><td id="XXQL" class="" style="width:108px">✅</td><td id="EHSK" class="" style="width:81px">✅</td><td id="khg&lt;" class="" style="width:113px">✅</td><td id="RMrO" class="">✅</td><td id="LP;J" class="">✅</td></tr></tbody></table><p id="116111ba-1e05-806e-86cf-f2798a51a3a0" class=""><strong>Compilacao HDF5</strong>:</p><p id="13b111ba-1e05-80a9-b3c0-c7c27abdfe09" class="">Configurar a compilação:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="13b111ba-1e05-80a3-bca0-c33c0b010f41" class="code"><code class="language-Bash">cd hdf5-1.X.X
+./configure --enable-parallel --enable-fortran</code></pre><p id="116111ba-1e05-806f-bdb1-d009719aae08" class="">→ Compilação:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="13b111ba-1e05-80ae-a655-e5b9243cc2d3" class="code"><code class="language-Bash">make 
+make check
+make install
+make check-install</code></pre><p id="13b111ba-1e05-80f2-892b-d9a20e7797bb" class="">Após a compilação bem-sucedida, adicionar o diretório <code>bin</code> e o <code>lib</code> ao <code>path</code> e <code>LD_LIBRARY_PATH</code>, respectivamente:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="13b111ba-1e05-8099-8a6b-f893d3a27f38" class="code"><code class="language-Bash">export PATH=&quot;&lt;path-to-hdf5-bin&gt;/bin:$PATH&quot;
+export LD_LIBRARY_PATH=&quot;&lt;path-to-hdf5-lib&gt;/lib:$LD_LIBRARY_PATH&quot;</code></pre><hr id="11a111ba-1e05-8076-98af-f9998601537b"/><p id="11a111ba-1e05-8078-a5e4-cc72d2184296" class=""><strong>Makefile include com intel oneapi, hdf5</strong>:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="11a111ba-1e05-80e3-8888-e53dba3c99d6" class="code"><code class="language-Bash"># Default precompiler options
+CPP_OPTIONS = -DHOST=\&quot;LinuxGNU\&quot; \
+              -DMPI -DMPI_BLOCK=8000 -Duse_collective \
+              -DscaLAPACK \
+              -DCACHE_SIZE=4000 \
+              -Davoidalloc \
+              -Dvasp6 \
+              -Duse_bse_te \
+              -Dtbdyn \
+              -Dfock_dblbuf \
+              -D_OPENMP
+
+CPP         = gcc -E -C -w $*$(FUFFIX) &gt;$*$(SUFFIX) $(CPP_OPTIONS)
+
+FC          = mpif90 -fopenmp
+FCL         = mpif90 -fopenmp
+
+FREE        = -ffree-form -ffree-line-length-none
+
+FFLAGS      = -w -ffpe-summary=invalid,zero,overflow
+
+OFLAG       = -O3
+OFLAG_IN    = $(OFLAG)
+DEBUG       = -O0
+
+OBJECTS     = fftmpiw.o fftmpi_map.o fftw3d.o fft3dlib.o
+OBJECTS_O1 += fftw3d.o fftmpi.o fftmpiw.o
+OBJECTS_O2 += fft3dlib.o
+
+# For what used to be vasp.5.lib
+CPP_LIB     = $(CPP)
+FC_LIB      = $(FC)
+CC_LIB      = gcc
+CFLAGS_LIB  = -O
+FFLAGS_LIB  = -O1
+FREE_LIB    = $(FREE)
+
+OBJECTS_LIB = linpack_double.o
+
+# For the parser library
+CXX_PARS    = g++
+LLIBS       = -lstdc++
+
+##
+## Customize as of this point! Of course you may change the preceding
+## part of this file as well if you like, but it should rarely be
+## necessary ...
+##
+
+# When compiling on the target machine itself, change this to the
+# relevant target when cross-compiling for another architecture
+FFLAGS     += -march=native
+
+# For gcc-10 and higher (comment out for older versions)
+#FFLAGS     += -fallow-argument-mismatch
+
+# BLAS and LAPACK (mandatory)
+#OPENBLAS_ROOT ?= /path/to/your/openblas/installation
+#BLASPACK    = -L$(OPENBLAS_ROOT)/lib -lopenblas
+BLASPACK    = -L/opt/intel/oneapi/mkl/2024.0/lib -lmkl_scalapack_lp64 -Wl,--no-as-needed -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lmkl_blacs_openmpi_lp64 -lpthread -lm -ldl 
+
+# scaLAPACK (mandatory)
+#SCALAPACK_ROOT ?= /path/to/your/scalapack/installation
+SCALAPACK   = -L/opt/intel/oneapi/mkl/2024.0/lib -lmkl_scalapack_lp64 -Wl,--no-as-needed -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lmkl_blacs_openmpi_lp64 -lpthread -lm -ldl
+
+LLIBS      += $(SCALAPACK) $(BLASPACK)
+
+# FFTW (mandatory)
+#FFTW_ROOT  ?= /path/to/your/fftw/installation
+LLIBS      += -L/usr/lib/x86_64-linux-gnu/ -lfftw3 -lfftw3_omp
+INCS       += -I/usr/local/include/
+
+# HDF5-support (optional but strongly recommended)
+# Nota: Versao 6.1 do VASP tem um bug com o uso do HDF5 em calculos de NEB!
+# Para resolver bastar compilar o programa ignorando esse bloco:
+CPP_OPTIONS += -DVASP_HDF5
+LLIBS	    += -L/home/caique/softwares/hdf5-1.10.4/hdf5/lib/ -lhdf5_fortran
+INCS        += -I/home/caique/softwares/hdf5-1.10.4/hdf5/include/
+</code></pre><p id="11a111ba-1e05-80fb-a22a-e1f060453de0" class="">Depois de acertar o makefile.include:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="11a111ba-1e05-8093-9d12-c3d415a0f27c" class="code"><code class="language-Bash">make DEPS=1 -j N</code></pre><hr id="11a111ba-1e05-80fd-b035-e1661e10bb24"/><p id="12e111ba-1e05-8052-9254-c1c0b110b25e" class=""><strong>Compilação VASP Com Vasp Transition State Tools (VTST)</strong>:</p><p id="12e111ba-1e05-8086-8f31-ebce3993ad74" class="">Código do grupo de Henckelmann para estudo de estados de transição incluído como módulo externo do VASP.</p><p id="12e111ba-1e05-80c0-b2a3-fcd5e3de6948" class="">→ Página do grupo de Henckelmann:</p><figure id="12e111ba-1e05-8098-93f4-c49fef008a8c"><a href="https://theory.cm.utexas.edu/henkelman/code/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">theory.cm.utexas.edu</div><div class="bookmark-description">All of these codes are free software: you can redistribute them and/or modify them under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.  A copy of the GNU General Public License is available at http://www.gnu.org/licenses/.</div></div><div class="bookmark-href"><img src="https://theory.cm.utexas.edu/favicon.ico" class="icon bookmark-icon"/>https://theory.cm.utexas.edu/henkelman/code/</div></div></a></figure><p id="12e111ba-1e05-8042-8d36-fa9eb00dc1a4" class="">→ Página de Download do VTST (VASP):</p><figure id="12e111ba-1e05-806e-ba88-de40ca22e473"><a href="https://theory.cm.utexas.edu/vtsttools/download.html" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Download — Transition State Tools for VASP</div><div class="bookmark-description">A read-only copy of the code can be anonymously checked out of the subversion
+repository with the following command:</div></div><div class="bookmark-href"><img src="https://theory.cm.utexas.edu/favicon.ico" class="icon bookmark-icon"/>https://theory.cm.utexas.edu/vtsttools/download.html</div></div></a></figure><p id="12e111ba-1e05-8027-bcb2-c2c196438e5e" class="">→ Instalação (segundo instruções da página do VASP):</p><figure id="12e111ba-1e05-8032-83db-ff134712bbae"><a href="https://theory.cm.utexas.edu/vtsttools/installation.html" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Installation — Transition State Tools for VASP</div><div class="bookmark-description">The VTST•Tools has a fortran component which can be linked into the VASP code as well as a collection of scripts.</div></div><div class="bookmark-href"><img src="https://theory.cm.utexas.edu/favicon.ico" class="icon bookmark-icon"/>https://theory.cm.utexas.edu/vtsttools/installation.html</div></div></a></figure><ol type="1" id="12e111ba-1e05-80df-87ab-deb177404d52" class="numbered-list" start="1"><li>Fazer o download dos arquivos do VTST:</li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="12e111ba-1e05-8076-886c-c8e734942972" class="code"><code class="language-JavaScript">wget https://theory.cm.utexas.edu/code/vtstcode-199.tgz</code></pre><ol type="1" id="12e111ba-1e05-8073-90d5-ed7ecd04bbf4" class="numbered-list" start="2"><li>Para versões do VTST mais recentes do que 2.04, é preciso modificar o arquivo <code>main.F</code> (vasp/src) do VASP para cálculos de NEB:</li></ol><ul id="12e111ba-1e05-8004-8d80-d43bae1ddad2" class="bulleted-list"><li style="list-style-type:disc">Substituir:</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="12e111ba-1e05-8065-8fe4-c9534e5da7e0" class="code"><code class="language-Fortran">CALL CHAIN_FORCE(T_INFO%NIONS,DYN%POSION,TOTEN,TIFOR, &amp;
+     LATT_CUR%A,LATT_CUR%B,IO%IU6)</code></pre><p id="12e111ba-1e05-809b-b0bc-db41ac9ebafe" class="">por:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="12e111ba-1e05-801c-b9fc-cbe0f726e9f5" class="code"><code class="language-Fortran">CALL CHAIN_FORCE(T_INFO%NIONS,DYN%POSION,TOTEN,TIFOR, &amp;
+     TSIF,LATT_CUR%A,LATT_CUR%B,IO%IU6)</code></pre><p id="12e111ba-1e05-80aa-8be9-d405ace0ce69" class="">Para o VASP 6.2 e versões mais recentes, modificar:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="12e111ba-1e05-800e-a538-ed62a2204192" class="code"><code class="language-Fortran">IF (LCHAIN) CALL chain_init( T_INFO, IO)</code></pre><p id="12e111ba-1e05-80e6-9885-d1f4d49d1117" class="">por </p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="146111ba-1e05-806b-a28a-d3a6b9068da5" class="code"><code class="language-Fortran">CALL chain_init( T_INFO, IO)</code></pre><p id="146111ba-1e05-806a-82e6-cf7f86f3c065" class="">*Para o VASP 6.2.0, utilizar  a versão vtstcode-199/6.2.</p><ol type="1" id="146111ba-1e05-8072-b40e-f4e65e47a3a3" class="numbered-list" start="3"><li>Copiar todos os arquivos do diretório do vtstcode para o diretório <code>src</code> do VASP. ATENÇÃO! O arquivo <code>chain.F</code> é substituido. Convém manter uma cópia do arquivo original.</li></ol><ol type="1" id="146111ba-1e05-80b3-9e2c-ee168640e605" class="numbered-list" start="4"><li>Modificar o arquivo <code>.objects</code> (vasp/src/.objects) e adicionar os seguintes objetos na variável <code>SOURCE</code> <strong>antes</strong> do <code>chain.o</code>:<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="146111ba-1e05-80d4-a47d-d2610ce3b92d" class="code"><code class="language-Fortran">!In vasp/src/.objects:
+...
+bfgs.o dynmat.o instanton.o lbfgs.o sd.o cg.o dimer.o bbm.o \
+fire.o lanczos.o neb.o qm.o opt.o \
+chain.o \</code></pre></li></ol><ol type="1" id="146111ba-1e05-8072-8790-fb24b8ea466c" class="numbered-list" start="5"><li>Para compilação em paralelo, adicionar <code>libs</code> às dependências do arquivo makefile do diretório src:<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="146111ba-1e05-80b6-83a7-d5f448281103" class="code"><code class="language-Fortran">!IN vasp/src/makefile:
+...
+dependencies: sources libs</code></pre></li></ol><p id="146111ba-1e05-8053-a7ae-eab064bda172" class="">Após esses passos, o vasp pode ser normalmente compilado:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="146111ba-1e05-80f9-80eb-eb4d7e1530f8" class="code"><code class="language-Fortran">make DEPS=1 -jN</code></pre><hr id="146111ba-1e05-80f9-af25-f93ee4e521a7"/><p id="11a111ba-1e05-80f4-be41-f99a728624d7" class=""><strong>Instalação do VASPSol</strong></p><figure id="11a111ba-1e05-8069-8e20-d71ca91a3257"><a href="https://github.com/henniggroup/VASPsol/tree/master" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">GitHub - henniggroup/VASPsol: Solvation model for the plane wave DFT code VASP.</div><div class="bookmark-description">Solvation model for the plane wave DFT code VASP. Contribute to henniggroup/VASPsol development by creating an account on GitHub.</div></div><div class="bookmark-href"><img src="https://github.com/fluidicon.png" class="icon bookmark-icon"/>https://github.com/henniggroup/VASPsol/tree/master</div></div><img src="https://opengraph.githubassets.com/e9592e8f509ac70d93f3c3600414672738dfda801665276764077aaf6ff87fd0/henniggroup/VASPsol" class="bookmark-image"/></a></figure><p id="11a111ba-1e05-80cd-838d-dfe70b077a41" class="">→ VASPSol: código mais antigo. Arquivos de patch estão disponíveis diretamente no github.</p><figure id="11a111ba-1e05-80cd-8937-e04647648848"><a href="https://www.xwang.info/post/compile-vaspsol-codes-into-vasp" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Compile VASPsol codes into VASP</div><div class="bookmark-description">VASPsol, developed by Kiran Mathew and Dr. Richard Hennig (https://github.com/henniggroup/VASPsol/blob/master/README.md), is an implicit solvation model that describes the effect of electrostatics, cavitation, and dispersion on the interaction between a solute and solvent into the plane-wave DFT code VASP (v. 5.2+). It provides a efficient approach to estimate the solvation effects for large periodic systems (e.g. catalyst surfaces) with good interoperability with standard ultrasoft pseudopotent</div></div><div class="bookmark-href"><img src="https://static.wixstatic.com/media/8827c1_061d05165658440d8c230c04aa06e203%7Emv2.jpg/v1/fill/w_192%2Ch_192%2Clg_1%2Cusm_0.66_1.00_0.01/8827c1_061d05165658440d8c230c04aa06e203%7Emv2.jpg" class="icon bookmark-icon"/>https://www.xwang.info/post/compile-vaspsol-codes-into-vasp</div></div><img src="https://static.wixstatic.com/media/8827c1_84dd9c2a1243405bbb17faded6539d53~mv2.jpg/v1/fill/w_576,h_576,al_c,lg_1,q_80/8827c1_84dd9c2a1243405bbb17faded6539d53~mv2.jpg" class="bookmark-image"/></a></figure><ol type="1" id="149111ba-1e05-80d7-bd14-ce2260b9a203" class="numbered-list" start="1"><li>Clonar o repositório do Github:</li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="149111ba-1e05-8060-a4f6-e6cb69c183de" class="code"><code class="language-Bash">git clone https://github.com/henniggroup/VASPsol.git</code></pre><ol type="1" id="149111ba-1e05-8032-a30d-db28aecfa726" class="numbered-list" start="2"><li>Copiaro arquivo <code>solvation.F</code> para o diretório <code>src</code> do VASP;</li></ol><ol type="1" id="149111ba-1e05-803a-ace0-e19c1287d8aa" class="numbered-list" start="3"><li>Modificar o arquivo <code>.objects</code> no diretório <code>src</code> do VASP de modo que o objeto <code>solvation.o</code> apareça antes de <code>pot.o</code>.</li></ol><ol type="1" id="149111ba-1e05-8090-9e00-cbd79bf8c177" class="numbered-list" start="4"><li>Modificar o arquivo <code>makefile.include</code> :</li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="149111ba-1e05-8088-b009-cb9101dd7f17" class="code"><code class="language-Bash">CPP_OPTIONS += -Dsol_compat</code></pre><ol type="1" id="149111ba-1e05-8022-b8a1-e74fdd4464e1" class="numbered-list" start="5"><li>Aplicar o patch utilizando o arquivo <code>vaspsol_fermi_vasp6.patch</code>:</li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="149111ba-1e05-80de-a2b2-d3aa0d1cd26c" class="code"><code class="language-Bash">patch -p0 &lt; &lt;path-to-patch-file&gt;</code></pre><p id="149111ba-1e05-80f9-bc78-f93eed12a60f" class="">Compilar o VASP normalmente:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="149111ba-1e05-8075-bd16-eb8bc5e0288e" class="code"><code class="language-Bash">make DEPS=1 -jN</code></pre><p id="11a111ba-1e05-8046-96ad-d81ba922f5f3" class="">Possível erro e como arrumar durante a instalação:</p><figure id="11a111ba-1e05-80a4-9b4c-c1abd264eac5"><a href="https://www.vasp.at/forum/viewtopic.php?t=18009" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Help: How to install vaspsol for vasp.6.1.0 - My Community</div><div class="bookmark-description">Questions regarding the compilation of VASP on various platforms: hardware, compilers and libraries, etc.</div></div><div class="bookmark-href">https://www.vasp.at/forum/viewtopic.php?t=18009</div></div></a></figure><p id="146111ba-1e05-80fa-9f92-d593360bb36f" class="">Links úteis:</p><figure id="146111ba-1e05-80ba-b464-e645f23244a1"><a href="https://github.com/VASPsol/VASPsol/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">GitHub - VASPsol/VASPsol</div><div class="bookmark-description">Contribute to VASPsol/VASPsol development by creating an account on GitHub.</div></div><div class="bookmark-href"><img src="https://github.com/fluidicon.png" class="icon bookmark-icon"/>https://github.com/VASPsol/VASPsol/</div></div><img src="https://opengraph.githubassets.com/051f23f488cbc21f61f987991e6e70c11547363bc7f94919760e21fc3b8a38b0/VASPsol/VASPsol" class="bookmark-image"/></a></figure><figure id="146111ba-1e05-801f-9f8c-c06ea1aab4ee"><a href="https://www.vasp.at/forum/viewtopic.php?t=18009" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Help: How to install vaspsol for vasp.6.1.0 - My Community</div><div class="bookmark-description">Questions regarding the compilation of VASP on various platforms: hardware, compilers and libraries, etc.</div></div><div class="bookmark-href">https://www.vasp.at/forum/viewtopic.php?t=18009</div></div></a></figure><p id="146111ba-1e05-809a-bb7d-fdc1726cdc1c" class="">Discussão no fórum do VASPSol sobre o erro ‘undefined reference to `m_sum_s_&#x27;&#x27;:</p><figure id="146111ba-1e05-80fc-b603-ec161b3932ac"><a href="https://github.com/henniggroup/VASPsol/issues/43" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">VASP6 with VASPsol add-on - compile error · Issue #43 · henniggroup/VASPsol</div><div class="bookmark-description">Has anyone compiled VASP6 with VASPsol? With basically the same compile script that I&amp;#39;m able to compile VASP5.4.4 with VASPsol does not work with VASP6. I&amp;#39;m getting the following error: sol...</div></div><div class="bookmark-href"><img src="https://github.com/fluidicon.png" class="icon bookmark-icon"/>https://github.com/henniggroup/VASPsol/issues/43</div></div><img src="https://opengraph.githubassets.com/af49f14691e8942c20768ca78c9ca24d93ef32267d6e568486b667db9ba5c40d/henniggroup/VASPsol/issues/43" class="bookmark-image"/></a></figure><p id="146111ba-1e05-8078-9c02-e687ac58e794" class="">Tutorial de um abençoado sobre instalação do VASPsol:</p><figure id="146111ba-1e05-80e9-b948-d35f49f6dc25"><a href="https://www.xwang.info/post/compile-vaspsol-codes-into-vasp" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Compile VASPsol codes into VASP</div><div class="bookmark-description">VASPsol, developed by Kiran Mathew and Dr. Richard Hennig (https://github.com/henniggroup/VASPsol/blob/master/README.md), is an implicit solvation model that describes the effect of electrostatics, cavitation, and dispersion on the interaction between a solute and solvent into the plane-wave DFT code VASP (v. 5.2+). It provides a efficient approach to estimate the solvation effects for large periodic systems (e.g. catalyst surfaces) with good interoperability with standard ultrasoft pseudopotent</div></div><div class="bookmark-href"><img src="https://static.wixstatic.com/media/8827c1_061d05165658440d8c230c04aa06e203%7Emv2.jpg/v1/fill/w_192%2Ch_192%2Clg_1%2Cusm_0.66_1.00_0.01/8827c1_061d05165658440d8c230c04aa06e203%7Emv2.jpg" class="icon bookmark-icon"/>https://www.xwang.info/post/compile-vaspsol-codes-into-vasp</div></div><img src="https://static.wixstatic.com/media/8827c1_84dd9c2a1243405bbb17faded6539d53~mv2.jpg/v1/fill/w_576,h_576,al_c,lg_1,q_80/8827c1_84dd9c2a1243405bbb17faded6539d53~mv2.jpg" class="bookmark-image"/></a></figure></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
